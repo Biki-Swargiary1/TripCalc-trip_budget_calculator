@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TripCalc - Smart Trip Budget Calculator</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="#home" class="logo">
+          <div class="logo-icon">
+            <img src="tripcalc-logo.png" alt="TripCalc logo" />
+          </div>
+          <h1 class="logo-text">
+            <span class="logo-text1">Trip</span><span class="logo-text2">Calc</span>
+
+          </h1>
+          
+        </a>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#home" class="active">Home</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#calculator">Calculator</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#calculator" class="nav-cta">Get Started</a></li>
+        </ul>
+        <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <h1>Plan Your Perfect Trip</h1>
+        <p>
+          Take control of your travel budget with our smart calculator. Track
+          expenses, set budgets, and travel with confidence.
+        </p>
+        <a href="#calculator" class="hero-cta">Start Planning Now</a>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+      <div class="features-container">
+        <h2 class="section-title">Why Choose TripCalc?</h2>
+        <p class="section-subtitle">
+          Everything you need to plan and manage your trip budget in one place
+        </p>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">💰</div>
+            <h3>Budget Tracking</h3>
+            <p>
+              Set your total budget and watch your spending in real-time with
+              visual progress indicators.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">🌍</div>
+            <h3>Multi-Currency</h3>
+            <p>
+              Support for USD, EUR, INR, JPY, and CNY with automatic symbol
+              updates throughout.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">✏️</div>
+            <h3>Custom Expenses</h3>
+            <p>
+              Add unlimited custom expense categories tailored to your specific
+              trip needs.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>Detailed Breakdown</h3>
+            <p>
+              See exactly where your money goes with percentage breakdowns for
+              each category.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">👥</div>
+            <h3>Per Person Costs</h3>
+            <p>
+              Automatically calculate costs per person for group trips and split
+              expenses fairly.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">📱</div>
+            <h3>Fully Responsive</h3>
+            <p>
+              Works perfectly on desktop, tablet, and mobile devices wherever
+              you are.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section class="calculator-section" id="calculator">
+      <div class="container">
+        <div class="content">
+          <div class="budget-section">
+            <h2>Set Your Budget</h2>
+            <div class="budget-input-group">
+              <div class="budget-input-wrapper">
+                <label for="totalBudget">Total Budget Amount</label>
+                <div class="budget-input-container">
+                  <span class="currency-symbol" id="budgetCurrencySymbol"
+                    >₹</span
+                  >
+                  <input
+                    type="number"
+                    id="totalBudget"
+                    placeholder="Enter your budget"
+                    min="0"
+                  />
+                </div>
+              </div>
+              <button class="set-budget-btn" onclick="setBudget()">
+                Set Budget
+              </button>
+            </div>
+
+            <div class="budget-display" id="budgetDisplay">
+              <div class="budget-info">
+                <div>
+                  <div class="budget-label">Your Budget</div>
+                  <div class="budget-value" id="budgetAmount">₹0</div>
+                </div>
+                <div style="text-align: right">
+                  <div class="budget-label">Remaining</div>
+                  <div class="budget-value" id="remainingAmount">₹0</div>
+                </div>
+              </div>
+              <div class="budget-bar-container">
+                <div class="budget-bar" id="budgetBar">0%</div>
+              </div>
+              <div class="budget-status" id="budgetStatus"></div>
+              <button class="edit-budget-btn" onclick="editBudget()">
+                Edit Budget
+              </button>
+            </div>
+          </div>
+
+          <div class="input-section">
+            <h2 class="calc-section-title">Trip Details</h2>
+            <div class="row">
+              <div class="input-group">
+                <label for="destination">Destination</label>
+                <div class="input-wrapper">
+                  <input
+                    type="text"
+                    id="destination"
+                    placeholder="e.g., Paris, France"
+                  />
+                </div>
+              </div>
+
+              <div class="input-group">
+                <label for="currency">Currency</label>
+                <div class="input-wrapper">
+                  <select id="currency" onchange="calculateBudget()">
+                    <option value="USD">🇺🇸 USD - US Dollar</option>
+                    <option value="EUR">🇪🇺 EUR - Euro</option>
+                    <option value="INR" selected>🇮🇳 INR - Indian Rupee</option>
+                    <option value="JPY">🇯🇵 JPY - Japanese Yen</option>
+                    <option value="CNY">🇨🇳 CNY - Chinese Yuan</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="input-group">
+                <label for="days">Number of Days</label>
+                <div class="input-wrapper">
+                  <input
+                    type="number"
+                    id="days"
+                    placeholder="e.g., 7"
+                    min="1"
+                    oninput="calculateBudget()"
+                  />
+                </div>
+              </div>
+
+              <div class="input-group">
+                <label for="people">Number of People</label>
+                <div class="input-wrapper">
+                  <input
+                    type="number"
+                    id="people"
+                    placeholder="e.g., 2"
+                    min="1"
+                    oninput="calculateBudget()"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="input-group" id="travel-group">
+                <div class="input-group-header">
+                  <label for="flights">Travel Cost (per person)</label>
+                  <button
+                    class="delete-default-btn"
+                    onclick="deleteDefaultExpense('travel-group')"
+                  >
+                    Delete
+                  </button>
+                </div>
+                <div class="input-wrapper">
+                  <span class="currency-symbol">$</span>
+                  <input
+                    type="number"
+                    id="flights"
+                    placeholder="0"
+                    min="0"
+                    oninput="calculateBudget()"
+                  />
+                </div>
+              </div>
+
+              <div class="input-group" id="accommodation-group">
+                <div class="input-group-header">
+                  <label for="accommodation">Accommodation (per night)</label>
+                  <button
+                    class="delete-default-btn"
+                    onclick="deleteDefaultExpense('accommodation-group')"
+                  >
+                    Delete
+                  </button>
+                </div>
+                <div class="input-wrapper">
+                  <span class="currency-symbol">$</span>
+                  <input
+                    type="number"
+                    id="accommodation"
+                    placeholder="0"
+                    min="0"
+                    oninput="calculateBudget()"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="input-group" id="food-group">
+                <div class="input-group-header">
+                  <label for="food">Food (per person/day)</label>
+                  <button
+                    class="delete-default-btn"
+                    onclick="deleteDefaultExpense('food-group')"
+                  >
+                    Delete
+                  </button>
+                </div>
+                <div class="input-wrapper">
+                  <span class="currency-symbol">$</span>
+                  <input
+                    type="number"
+                    id="food"
+                    placeholder="0"
+                    min="0"
+                    oninput="calculateBudget()"
+                  />
+                </div>
+              </div>
+
+              <div class="input-group" id="activities-group">
+                <div class="input-group-header">
+                  <label for="activities">Activities (per person/day)</label>
+                  <button
+                    class="delete-default-btn"
+                    onclick="deleteDefaultExpense('activities-group')"
+                  >
+                    Delete
+                  </button>
+                </div>
+                <div class="input-wrapper">
+                  <span class="currency-symbol">$</span>
+                  <input
+                    type="number"
+                    id="activities"
+                    placeholder="0"
+                    min="0"
+                    oninput="calculateBudget()"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="input-group" id="transport-group">
+                <div class="input-group-header">
+                  <label for="transport">Local Transport (per day)</label>
+                  <button
+                    class="delete-default-btn"
+                    onclick="deleteDefaultExpense('transport-group')"
+                  >
+                    Delete
+                  </button>
+                </div>
+                <div class="input-wrapper">
+                  <span class="currency-symbol">$</span>
+                  <input
+                    type="number"
+                    id="transport"
+                    placeholder="0"
+                    min="0"
+                    oninput="calculateBudget()"
+                  />
+                </div>
+              </div>
+
+              <div class="input-group" id="miscellaneous-group">
+                <div class="input-group-header">
+                  <label for="miscellaneous">Miscellaneous (total)</label>
+                  <button
+                    class="delete-default-btn"
+                    onclick="deleteDefaultExpense('miscellaneous-group')"
+                  >
+                    Delete
+                  </button>
+                </div>
+                <div class="input-wrapper">
+                  <span class="currency-symbol">$</span>
+                  <input
+                    type="number"
+                    id="miscellaneous"
+                    placeholder="0"
+                    min="0"
+                    oninput="calculateBudget()"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="input-section">
+            <div class="custom-expense-header">
+              <h2 class="custom-expense-title">Custom Expenses</h2>
+              <button class="add-expense-btn" onclick="addCustomExpense()">
+                + Add Expense
+              </button>
+            </div>
+            <div id="customExpensesContainer">
+              <div class="no-custom-expenses">
+                No custom expenses added yet. Click "Add Expense" to create one.
+              </div>
+            </div>
+          </div>
+
+          <div class="breakdown-section">
+            <h2 class="breakdown-title">Budget Breakdown</h2>
+            <div class="no-custom-expenses">
+              Start adding expenses to see your breakdown
+            </div>
+          </div>
+
+          <div class="total-section">
+            <div class="total-label">Total Trip Cost</div>
+            <div class="total-amount" id="totalAmount">$0</div>
+            <div class="per-person" id="perPerson">$0 per person</div>
+          </div>
+
+          <button onclick="resetCalculator()">Reset Calculator</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+      <div class="about-container">
+        <h2>About TripCalc</h2>
+        <p>
+          TripCalc is designed to make travel budget planning simple and
+          stress-free. Whether you're planning a weekend getaway or a month-long
+          adventure, our calculator helps you stay on track financially.
+        </p>
+        <p>
+          We understand that every trip is unique, which is why we've built a
+          flexible tool that adapts to your specific needs. Set your budget, add
+          your expenses, and watch your trip come together with confidence.
+        </p>
+        <p>
+          Our mission is to help travelers focus on making memories, not
+          worrying about money. With TripCalc, you'll always know exactly where
+          you stand financially.
+        </p>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <h3>TripCalc</h3>
+            <p>
+              Your smart companion for stress-free travel budget planning. Plan
+              better, travel smarter.
+            </p>
+            <div class="social-links">
+              <a href="#" class="social-link">𝕏</a>
+              <a href="#" class="social-link">in</a>
+              <a href="#" class="social-link">f</a>
+              <a href="#" class="social-link">@</a>
+            </div>
+          </div>
+
+          <div class="footer-column">
+            <h4>Product</h4>
+            <ul class="footer-links">
+              <li><a href="#features">Features</a></li>
+              <li><a href="#calculator">Calculator</a></li>
+              <li><a href="#">Updates</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4>Company</h4>
+            <ul class="footer-links">
+              <li><a href="#about">About</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4>Legal</h4>
+            <ul class="footer-links">
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">Cookie Policy</a></li>
+              <li><a href="#">Disclaimer</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2026 TripCalc. All rights reserved.</p>
+          <div class="footer-bottom-links">
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>
